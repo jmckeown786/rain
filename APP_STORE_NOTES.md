@@ -22,10 +22,16 @@ Features:
 - Automatic best throw, average miss, and win/chase summaries.
 - Varpa kit list with material, weight, diameter, notes, and favorite equipment.
 - Almanac with sport history, rules, unique characteristics, and glossary.
-- Offline use with no account, ads, or tracking.
+- Offline-first use with no account, ads, subscriptions, or in-app purchases.
 
 ## Keywords
 varpa, sports, swedish, planner, rain, precision, gotland, throwing, results
 
 ## Review Notes
-RBT Varpa Rain is fully offline. No login is required. The app stores only local plans, results, kit notes, and profile values with UserDefaults and includes a reset option in Profile.
+RBT Varpa Rain is a sports companion app for varpa, a traditional Swedish precision throwing game. The app is designed for players who want to learn the sport, read rules and historical context, plan upcoming matches, record measured throw results, and manage notes about equipment, surfaces, weather, and playing conditions.
+
+No registration, login, or user account is required. The app does not include subscriptions, in-app purchases, paid content, or ads.
+
+All user-created app data is stored locally on the device, including match plans, result history, kit notes, profile display values, language preference, and onboarding state. The app includes a local reset option in Profile.
+
+The only network-related measurement is Firebase analytics for basic app usage diagnostics. User-created match, result, kit, note, and profile content is not uploaded to an app backend.
