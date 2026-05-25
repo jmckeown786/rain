@@ -120,44 +120,16 @@ struct LogoMark: View {
     let size: CGFloat
 
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(
-                    LinearGradient(
-                        colors: [Color(hex: 0x071633), Color(hex: 0x123F78)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-            Ellipse()
-                .fill(Color(hex: 0x72D7FF).opacity(0.16))
-                .frame(width: size * 1.12, height: size * 0.74)
-                .offset(x: size * 0.08, y: -size * 0.01)
-                .blur(radius: size * 0.04)
-            Text("Rbt")
-                .font(.custom("SignPainter-HouseScriptSemibold", size: size * 0.48))
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [Color(hex: 0xF4FBFF), Color(hex: 0xB7DFFF)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .shadow(color: Color(hex: 0x020817).opacity(0.65), radius: size * 0.06, x: 0, y: size * 0.04)
-                .lineLimit(1)
-                .minimumScaleFactor(0.72)
-                .padding(.horizontal, size * 0.08)
-                .offset(y: size * 0.02)
-            Capsule()
-                .fill(Color(hex: 0xCDEEFF).opacity(0.8))
-                .frame(width: size * 0.48, height: max(2, size * 0.035))
-                .offset(y: size * 0.25)
-        }
+        Image("RBTVarpaLogo")
+            .resizable()
+            .scaledToFill()
         .frame(width: size, height: size)
+        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .stroke(Color(hex: 0x8FCFFF).opacity(0.34), lineWidth: 1)
         )
+        .shadow(color: Color(hex: 0x020817).opacity(0.3), radius: 8, x: 0, y: 5)
     }
 }
 
