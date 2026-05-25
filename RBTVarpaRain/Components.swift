@@ -92,27 +92,7 @@ struct BrandLockup: View {
     var compact = false
 
     var body: some View {
-        HStack(spacing: compact ? 10 : 14) {
-            LogoMark(size: compact ? 56 : 78)
-            VStack(alignment: .leading, spacing: compact ? -1 : -2) {
-                Text("Rbt")
-                    .font(.custom("SignPainter-HouseScriptSemibold", size: compact ? 42 : 59))
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [Color(hex: 0xF4FBFF), Color(hex: 0xB9DEFF)],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
-                    .shadow(color: Color(hex: 0x020817).opacity(0.58), radius: 5, x: 0, y: 3)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                Text("VARPA RAIN")
-                    .font(.system(size: compact ? 8 : 10, weight: .heavy))
-                    .tracking(compact ? 3.2 : 4.4)
-                    .foregroundStyle(Color(hex: 0xBEDAFF).opacity(0.88))
-            }
-        }
+        LogoMark(size: compact ? 68 : 96)
     }
 }
 
