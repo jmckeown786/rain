@@ -133,6 +133,103 @@ struct GearItem: Identifiable, Codable, Equatable {
     var favorite: Bool
 }
 
+struct LaneReadout {
+    let score: Int
+    let title: String
+    let summary: String
+    let checks: [String]
+
+    static func make(
+        surface: SurfaceType,
+        weather: WeatherCondition,
+        targetDistance: Double,
+        gear: GearItem,
+        bestDistance: Double,
+        language: AppLanguage
+    ) -> LaneReadout {
+        let weatherPenalty: Int = switch weather {
+        case .dry: 0
+        case .lightRain: 8
+        case .heavyRain: 18
+        case .wind: 14
+        }
+        let surfacePenalty: Int = switch surface {
+        case .grass: weather == .heavyRain ? 12 : 4
+        case .gravel: 5
+        case .clay: weather == .heavyRain ? 16 : 8
+        case .indoor: 0
+        }
+        let distancePenalty = max(0, Int((targetDistance - 18) * 1.4))
+        let formBonus = bestDistance > 0 ? min(12, Int(max(0, 1.2 - bestDistance) * 10)) : 0
+        let score = min(96, max(42, 88 - weatherPenalty - surfacePenalty - distancePenalty + formBonus))
+
+        switch language {
+        case .english:
+            return LaneReadout(
+                score: score,
+                title: score >= 78 ? "Lane reads clean" : score >= 62 ? "Lane needs control" : "Lane is demanding",
+                summary: "Use \(gear.name) at \(gear.weight.kilograms) for \(targetDistance.meters). \(releaseAdvice(weather: weather, surface: surface, language: language))",
+                checks: [
+                    "Mark the nearest edge, not the visual center.",
+                    frictionCheck(surface: surface, weather: weather, language: language),
+                    bestDistance > 0 ? "Your best logged miss is \(bestDistance.meters); play the first frame for confirmation." : "No personal best yet; use the first frame to calibrate release speed."
+                ]
+            )
+        case .swedish:
+            return LaneReadout(
+                score: score,
+                title: score >= 78 ? "Banan läses rent" : score >= 62 ? "Banan kräver kontroll" : "Banan är krävande",
+                summary: "Använd \(gear.name) på \(gear.weight.kilograms) för \(targetDistance.meters). \(releaseAdvice(weather: weather, surface: surface, language: language))",
+                checks: [
+                    "Markera närmaste kant, inte den visuella mitten.",
+                    frictionCheck(surface: surface, weather: weather, language: language),
+                    bestDistance > 0 ? "Din bästa loggade avvikelse är \(bestDistance.meters); spela första omgången för bekräftelse." : "Ingen personlig bästa notering ännu; använd första omgången för att kalibrera fart."
+                ]
+            )
+        }
+    }
+
+    private static func releaseAdvice(weather: WeatherCondition, surface: SurfaceType, language: AppLanguage) -> String {
+        switch language {
+        case .english:
+            switch (weather, surface) {
+            case (.wind, _): "Keep the release low and avoid extra height."
+            case (.heavyRain, .grass), (.heavyRain, .clay): "Expect the varpa to stop early on wet ground."
+            case (.lightRain, _): "Check grip before each throw and favor a smooth low arc."
+            case (_, .indoor): "Trust the roll; indoor friction should stay consistent."
+            default: "Start with a measured low release and adjust after the first mark."
+            }
+        case .swedish:
+            switch (weather, surface) {
+            case (.wind, _): "Håll kastet lågt och undvik extra höjd."
+            case (.heavyRain, .grass), (.heavyRain, .clay): "Räkna med att varpan stannar tidigt på vått underlag."
+            case (.lightRain, _): "Kontrollera greppet före varje kast och välj en mjuk låg båge."
+            case (_, .indoor): "Lita på rullningen; inomhusfriktionen bör vara jämn."
+            default: "Börja med ett kontrollerat lågt kast och justera efter första markeringen."
+            }
+        }
+    }
+
+    private static func frictionCheck(surface: SurfaceType, weather: WeatherCondition, language: AppLanguage) -> String {
+        switch language {
+        case .english:
+            switch surface {
+            case .grass: weather == .dry ? "Grass should carry; watch bounce on the first landing." : "Wet grass absorbs speed; choose a slightly firmer throw."
+            case .gravel: "Gravel can kick sideways; inspect the landing strip before scoring."
+            case .clay: "Clay rewards a clean edge; wipe the varpa before each measured throw."
+            case .indoor: "Indoor lanes reward repeatable rhythm over power."
+            }
+        case .swedish:
+            switch surface {
+            case .grass: weather == .dry ? "Gräs bär bra; följ första studsen noga." : "Vått gräs bromsar fart; välj ett något fastare kast."
+            case .gravel: "Grus kan kasta varpan i sidled; kontrollera landningsytan före mätning."
+            case .clay: "Lera belönar ren kant; torka varpan före varje uppmätt kast."
+            case .indoor: "Inomhusbanor belönar jämn rytm mer än kraft."
+            }
+        }
+    }
+}
+
 struct AlmanacArticle: Identifiable {
     let id: String
     let title: String

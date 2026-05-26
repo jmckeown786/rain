@@ -10,7 +10,7 @@ Match journal for varpa
 Sports
 
 ## Promotional Text
-Plan Varpa matches, record measured throws, manage kit, and learn the history and rules of the Gotland precision sport.
+Plan Varpa matches, read lane conditions, record measured throws, manage kit, and learn the history and rules of the Gotland precision sport.
 
 ## Description
 Varpa Rain is a full local companion for the Swedish precision throwing sport varpa. It helps players understand the sport, plan matches, record measured results, compare best throws, and keep notes on equipment and playing conditions.
@@ -18,6 +18,7 @@ Varpa Rain is a full local companion for the Swedish precision throwing sport va
 Features:
 
 - Match planner with opponent, venue, date, format, surface, weather, target distance, and notes.
+- Lane reading assistant that converts surface, weather, distance, kit, and previous best miss into match-day advice.
 - Result journal for player and opponent throw distances.
 - Automatic best throw, average miss, and win/chase summaries.
 - Varpa kit list with material, weight, diameter, notes, and favorite equipment.
@@ -28,7 +29,7 @@ Features:
 varpa, gotland, swedish sport, match journal, precision throwing, results, kit, rules, planner
 
 ## Review Notes
-Varpa Rain is a sports companion app for varpa, a traditional Swedish precision throwing game. The app is designed for players who want to learn the sport, read rules and historical context, plan upcoming matches, record measured throw results, and manage notes about equipment, surfaces, weather, and playing conditions.
+Varpa Rain is a sports companion app for varpa, a traditional Swedish precision throwing game. The app is designed for players who want to learn the sport, read rules and historical context, plan upcoming matches, read lane conditions, record measured throw results, and manage notes about equipment, surfaces, weather, and playing conditions.
 
 No registration, login, or user account is required. The app does not include subscriptions, in-app purchases, paid content, or ads.
 

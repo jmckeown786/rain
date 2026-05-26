@@ -15,6 +15,16 @@ struct MatchCenterView: View {
     private var language: AppLanguage {
         AppLanguage(rawValue: languageRawValue) ?? .english
     }
+    private var currentReadout: LaneReadout {
+        LaneReadout.make(
+            surface: surface,
+            weather: weather,
+            targetDistance: targetDistance,
+            gear: store.favoriteGear,
+            bestDistance: store.bestDistance,
+            language: language
+        )
+    }
 
     private enum PlannerField {
         case opponent
@@ -72,6 +82,13 @@ struct MatchCenterView: View {
                                 .foregroundStyle(BrandPalette.white)
                             Slider(value: $targetDistance, in: 8...25, step: 0.5)
                                 .tint(BrandPalette.gold)
+                        }
+
+                        LaneReadoutPanel(
+                            readout: currentReadout,
+                            actionTitle: language == .english ? "Add lane read to notes" : "Lägg banläsning i anteckningar"
+                        ) {
+                            appendLaneReadToNotes()
                         }
 
                         TextField(
@@ -164,6 +181,17 @@ struct MatchCenterView: View {
         venue = ""
         notes = ""
         targetDistance = 20
+    }
+
+    private func appendLaneReadToNotes() {
+        let readout = currentReadout
+        let text = ([readout.title, readout.summary] + readout.checks).joined(separator: "\n- ")
+        if notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            notes = text
+        } else {
+            notes += "\n\n\(text)"
+        }
+        focusedField = .notes
     }
 
     private func localizedFormat(_ value: String) -> String {

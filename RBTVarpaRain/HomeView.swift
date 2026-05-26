@@ -6,6 +6,16 @@ struct HomeView: View {
     @Binding var selectedSection: AppSection
 
     private var nextMatch: MatchPlan { store.upcomingPlans.first ?? .sample }
+    private var laneReadout: LaneReadout {
+        LaneReadout.make(
+            surface: nextMatch.surface,
+            weather: nextMatch.weather,
+            targetDistance: nextMatch.targetDistance,
+            gear: store.favoriteGear,
+            bestDistance: store.bestDistance,
+            language: language
+        )
+    }
     private var language: AppLanguage {
         AppLanguage(rawValue: languageRawValue) ?? .english
     }
@@ -69,6 +79,13 @@ struct HomeView: View {
                             .buttonStyle(QuietButtonStyle())
                         }
                     }
+                }
+
+                LaneReadoutCard(
+                    readout: laneReadout,
+                    actionTitle: language == .english ? "Open planner with this read" : "Öppna planering med banläsning"
+                ) {
+                    selectedSection = .planner
                 }
 
                 SectionKick(title: L.text(.productTools, language), subtitle: L.text(.homeToolsSubtitle, language))

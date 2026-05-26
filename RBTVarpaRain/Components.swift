@@ -48,17 +48,25 @@ struct RainBackground: View {
         ZStack {
             BrandPalette.ink.ignoresSafeArea()
             LinearGradient(
-                colors: [BrandPalette.midnight, BrandPalette.ink],
+                colors: [BrandPalette.midnight, BrandPalette.ink, Color(hex: 0x01031A)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
 
             RadialGradient(
-                colors: [BrandPalette.rainBlue.opacity(0.28), .clear],
+                colors: [BrandPalette.rainBlue.opacity(0.48), .clear],
                 center: .topTrailing,
                 startRadius: 20,
                 endRadius: 420
+            )
+            .ignoresSafeArea()
+
+            RadialGradient(
+                colors: [BrandPalette.glowBlue.opacity(0.18), .clear],
+                center: .center,
+                startRadius: 80,
+                endRadius: 620
             )
             .ignoresSafeArea()
         }
@@ -81,10 +89,10 @@ struct RainCard<Content: View>: View {
                     .fill(LinearGradient.rainSurface)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .stroke(BrandPalette.glowBlue.opacity(0.2), lineWidth: 1)
+                            .stroke(BrandPalette.glowBlue.opacity(0.32), lineWidth: 1)
                     )
             )
-            .shadow(color: BrandPalette.ink.opacity(0.28), radius: 12, x: 0, y: 8)
+            .shadow(color: BrandPalette.rainBlue.opacity(0.2), radius: 16, x: 0, y: 10)
     }
 }
 
@@ -107,9 +115,9 @@ struct LogoMark: View {
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .stroke(Color(hex: 0x8FCFFF).opacity(0.34), lineWidth: 1)
+                .stroke(BrandPalette.glowBlue.opacity(0.5), lineWidth: 1)
         )
-        .shadow(color: Color(hex: 0x020817).opacity(0.3), radius: 8, x: 0, y: 5)
+        .shadow(color: BrandPalette.rainBlue.opacity(0.34), radius: 10, x: 0, y: 6)
     }
 }
 
@@ -226,7 +234,11 @@ struct SurfaceSegmentedControl: View {
                         .padding(.vertical, 11)
                         .background(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .fill(selection == item ? item.color : BrandPalette.white.opacity(0.08))
+                                .fill(selection == item ? item.color : BrandPalette.white.opacity(0.09))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                        .stroke(selection == item ? BrandPalette.glowBlue.opacity(0.38) : .clear, lineWidth: 1)
+                                )
                         )
                 }
                 .buttonStyle(.plain)
@@ -235,7 +247,7 @@ struct SurfaceSegmentedControl: View {
         .padding(5)
         .background(
             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(BrandPalette.ink.opacity(0.5))
+                .fill(BrandPalette.ink.opacity(0.68))
         )
     }
 }
@@ -268,7 +280,7 @@ struct WeatherMenu: View {
                 .padding(12)
                 .background(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(BrandPalette.ink.opacity(0.5))
+                        .fill(BrandPalette.ink.opacity(0.68))
                         .overlay(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                                 .stroke(BrandPalette.glowBlue.opacity(0.18), lineWidth: 1)
@@ -305,7 +317,7 @@ struct WeatherMenu: View {
                             .padding(.vertical, 11)
                             .background(
                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                    .fill(selection == item ? BrandPalette.glowBlue : BrandPalette.ink.opacity(0.72))
+                                    .fill(selection == item ? BrandPalette.glowBlue : BrandPalette.ink.opacity(0.82))
                             )
                         }
                         .buttonStyle(.plain)
@@ -314,7 +326,7 @@ struct WeatherMenu: View {
                 .padding(6)
                 .background(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(BrandPalette.panel.opacity(0.96))
+                        .fill(BrandPalette.panel.opacity(0.98))
                         .overlay(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                                 .stroke(BrandPalette.glowBlue.opacity(0.2), lineWidth: 1)
@@ -393,6 +405,81 @@ struct VarpaStone: View {
     }
 }
 
+struct LaneReadoutCard: View {
+    let readout: LaneReadout
+    let actionTitle: String?
+    var action: (() -> Void)?
+
+    var body: some View {
+        RainCard {
+            LaneReadoutPanel(readout: readout, actionTitle: actionTitle, action: action)
+        }
+    }
+}
+
+struct LaneReadoutPanel: View {
+    let readout: LaneReadout
+    let actionTitle: String?
+    var action: (() -> Void)?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 13) {
+            HStack(alignment: .center, spacing: 12) {
+                ZStack {
+                    Circle()
+                        .stroke(BrandPalette.white.opacity(0.12), lineWidth: 8)
+                    Circle()
+                        .trim(from: 0, to: CGFloat(readout.score) / 100)
+                        .stroke(
+                            BrandPalette.glowBlue,
+                            style: StrokeStyle(lineWidth: 8, lineCap: .round)
+                        )
+                        .rotationEffect(.degrees(-90))
+                    Text("\(readout.score)")
+                        .font(.headline.weight(.black))
+                        .foregroundStyle(BrandPalette.white)
+                }
+                .frame(width: 58, height: 58)
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(readout.title)
+                        .font(.headline.weight(.black))
+                        .foregroundStyle(BrandPalette.white)
+                    Text(readout.summary)
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(BrandPalette.textSoft)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+
+            VStack(alignment: .leading, spacing: 7) {
+                ForEach(readout.checks, id: \.self) { check in
+                    Label(check, systemImage: "checkmark.seal.fill")
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(BrandPalette.textSoft)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+
+            if let actionTitle, let action {
+                Button(action: action) {
+                    Label(actionTitle, systemImage: "text.badge.plus")
+                }
+                .buttonStyle(QuietButtonStyle())
+            }
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(BrandPalette.ink.opacity(0.45))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(BrandPalette.glowBlue.opacity(0.18), lineWidth: 1)
+                )
+        )
+    }
+}
+
 struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -431,5 +518,9 @@ extension Date {
 extension Double {
     var meters: String {
         String(format: "%.2f m", self)
+    }
+
+    var kilograms: String {
+        String(format: "%.2f kg", self)
     }
 }

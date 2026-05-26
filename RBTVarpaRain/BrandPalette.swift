@@ -1,21 +1,21 @@
 import SwiftUI
 
 enum BrandPalette {
-    static let ink = Color(hex: 0x08120F)
-    static let midnight = Color(hex: 0x12201D)
-    static let panel = Color(hex: 0x172923)
-    static let panelSoft = Color(hex: 0x263B34)
-    static let rainBlue = Color(hex: 0x46A6B8)
-    static let glowBlue = Color(hex: 0x7DD7E7)
-    static let cyan = Color(hex: 0x8BE0D0)
-    static let gold = Color(hex: 0xD9B765)
-    static let mint = Color(hex: 0x72D494)
-    static let coral = Color(hex: 0xE37B64)
-    static let clay = Color(hex: 0xA76E45)
+    static let ink = Color(hex: 0x03072C)
+    static let midnight = Color(hex: 0x071052)
+    static let panel = Color(hex: 0x0B1763)
+    static let panelSoft = Color(hex: 0x102A8E)
+    static let rainBlue = Color(hex: 0x326BFF)
+    static let glowBlue = Color(hex: 0xDCEAFF)
+    static let cyan = Color(hex: 0x7BB8FF)
+    static let gold = Color(hex: 0xEAD37A)
+    static let mint = Color(hex: 0x9FC9FF)
+    static let coral = Color(hex: 0xF18B7D)
+    static let clay = Color(hex: 0xB99065)
     static let white = Color.white
-    static let text = Color(hex: 0xF4FAF7)
-    static let textSoft = Color(hex: 0xB7CBC3)
-    static let textMuted = Color(hex: 0x7A938A)
+    static let text = Color(hex: 0xF7FAFF)
+    static let textSoft = Color(hex: 0xC6D8F7)
+    static let textMuted = Color(hex: 0x8298C9)
 }
 
 extension Color {
@@ -32,13 +32,13 @@ extension Color {
 
 extension LinearGradient {
     static let rainSurface = LinearGradient(
-        colors: [BrandPalette.panel, BrandPalette.panelSoft],
+        colors: [BrandPalette.panel.opacity(0.96), BrandPalette.panelSoft.opacity(0.72)],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
 
     static let rainAction = LinearGradient(
-        colors: [BrandPalette.rainBlue, BrandPalette.glowBlue],
+        colors: [BrandPalette.glowBlue, Color(hex: 0x8FBCFF)],
         startPoint: .leading,
         endPoint: .trailing
     )
