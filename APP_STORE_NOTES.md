@@ -18,6 +18,7 @@ Varpa Rain is a full local companion for the Swedish precision throwing sport va
 Features:
 
 - Match planner with opponent, venue, date, format, surface, weather, target distance, and notes.
+- Built-in football, basketball, and hockey team directory for quick opponent/team selection.
 - Lane reading assistant that converts surface, weather, distance, kit, and previous best miss into match-day advice.
 - Result journal for player and opponent throw distances.
 - Automatic best throw, average miss, and win/chase summaries.

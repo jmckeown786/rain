@@ -6,6 +6,7 @@ The app combines a polished sports interface with practical club tools:
 
 - Dashboard for next match, match stats, and quick actions.
 - Match planner with opponent, venue, date, format, surface, weather, target distance, and notes.
+- Built-in football, basketball, and hockey team directory for fast opponent/team entry.
 - Lane reading assistant with match-day recommendations based on surface, weather, distance, kit, and logged throw form.
 - Result journal with measured throw distances, best miss, average miss, and win state.
 - Almanac covering Varpa history, core rules, unique sport traits, and glossary.

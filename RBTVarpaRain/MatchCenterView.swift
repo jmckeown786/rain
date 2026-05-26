@@ -11,6 +11,8 @@ struct MatchCenterView: View {
     @State private var weather: WeatherCondition = .lightRain
     @State private var targetDistance = 20.0
     @State private var notes = ""
+    @State private var teamSport: TeamSport = .football
+    @State private var teamSearch = ""
     @FocusState private var focusedField: PlannerField?
     private var language: AppLanguage {
         AppLanguage(rawValue: languageRawValue) ?? .english
@@ -31,6 +33,21 @@ struct MatchCenterView: View {
         case venue
         case format
         case notes
+        case teamSearch
+    }
+
+    private var suggestedTeams: [SportTeam] {
+        let query = teamSearch.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        return AppData.sportTeams
+            .filter { $0.sport == teamSport }
+            .filter { team in
+                query.isEmpty ||
+                team.name.lowercased().contains(query) ||
+                team.league.lowercased().contains(query) ||
+                team.region.lowercased().contains(query)
+            }
+            .prefix(12)
+            .map { $0 }
     }
 
     var body: some View {
@@ -43,6 +60,9 @@ struct MatchCenterView: View {
                         Text(L.text(.newMatch, language))
                             .font(.title2.weight(.black))
                             .foregroundStyle(BrandPalette.white)
+
+                        teamDirectory
+
                         TextField(
                             L.text(.opponentTeam, language),
                             text: $opponent,
@@ -192,6 +212,111 @@ struct MatchCenterView: View {
             notes += "\n\n\(text)"
         }
         focusedField = .notes
+    }
+
+    private var teamDirectory: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 7) {
+                ForEach(TeamSport.allCases) { sport in
+                    Button {
+                        withAnimation(.spring(response: 0.24, dampingFraction: 0.82)) {
+                            teamSport = sport
+                            teamSearch = ""
+                        }
+                    } label: {
+                        Label(teamSportTitle(sport), systemImage: sport.symbol)
+                            .labelStyle(.iconOnly)
+                            .font(.headline.weight(.black))
+                            .foregroundStyle(teamSport == sport ? BrandPalette.ink : BrandPalette.textSoft)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(teamSport == sport ? BrandPalette.glowBlue : BrandPalette.white.opacity(0.08))
+                            )
+                            .accessibilityLabel(teamSportTitle(sport))
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+
+            TextField(
+                teamSearchPrompt,
+                text: $teamSearch,
+                prompt: Text(teamSearchPrompt).foregroundColor(BrandPalette.textMuted)
+            )
+            .textFieldStyle(AppTextFieldStyle())
+            .focused($focusedField, equals: .teamSearch)
+            .submitLabel(.done)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(suggestedTeams) { team in
+                        Button {
+                            applyTeam(team)
+                        } label: {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(team.name)
+                                    .font(.caption.weight(.black))
+                                    .foregroundStyle(BrandPalette.white)
+                                    .lineLimit(1)
+                                Text("\(team.league) - \(team.region)")
+                                    .font(.caption2.weight(.bold))
+                                    .foregroundStyle(BrandPalette.textSoft)
+                                    .lineLimit(1)
+                            }
+                            .padding(.horizontal, 11)
+                            .padding(.vertical, 9)
+                            .frame(width: 174, alignment: .leading)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(BrandPalette.ink.opacity(0.52))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .stroke(BrandPalette.glowBlue.opacity(0.18), lineWidth: 1)
+                                    )
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
+    }
+
+    private var teamSearchPrompt: String {
+        switch language {
+        case .english: "Search \(teamSportTitle(teamSport).lowercased()) teams"
+        case .swedish: "Sök \(teamSportTitle(teamSport).lowercased())lag"
+        }
+    }
+
+    private func teamSportTitle(_ sport: TeamSport) -> String {
+        switch language {
+        case .english:
+            switch sport {
+            case .football: "Football"
+            case .basketball: "Basketball"
+            case .hockey: "Hockey"
+            }
+        case .swedish:
+            switch sport {
+            case .football: "Fotboll"
+            case .basketball: "Basket"
+            case .hockey: "Hockey"
+            }
+        }
+    }
+
+    private func applyTeam(_ team: SportTeam) {
+        opponent = team.name
+        let teamNote = "\(team.name) - \(team.league), \(team.region)"
+        if notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            notes = teamNote
+        } else if !notes.contains(teamNote) {
+            notes += "\n\(teamNote)"
+        }
+        focusedField = .venue
     }
 
     private func localizedFormat(_ value: String) -> String {

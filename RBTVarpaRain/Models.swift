@@ -290,6 +290,30 @@ struct FeatureNote: Identifiable {
     let color: Color
 }
 
+enum TeamSport: String, CaseIterable, Identifiable {
+    case football
+    case basketball
+    case hockey
+
+    var id: String { rawValue }
+
+    var symbol: String {
+        switch self {
+        case .football: "soccerball"
+        case .basketball: "basketball.fill"
+        case .hockey: "figure.hockey"
+        }
+    }
+}
+
+struct SportTeam: Identifiable {
+    let id: String
+    let name: String
+    let league: String
+    let region: String
+    let sport: TeamSport
+}
+
 @MainActor
 final class VarpaStore: ObservableObject {
     private enum Keys {
