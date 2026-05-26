@@ -1,10 +1,10 @@
 # App Store Notes
 
 ## App Name
-RBT Varpa Rain
+Varpa Match Journal
 
 ## Subtitle
-Varpa planner and results
+Match journal for varpa
 
 ## Category
 Sports
@@ -13,7 +13,7 @@ Sports
 Plan Varpa matches, record measured throws, manage kit, and learn the history and rules of the Gotland precision sport.
 
 ## Description
-RBT Varpa Rain is a full local companion for the Swedish precision throwing sport varpa. It helps players understand the sport, plan matches, record measured results, compare best throws, and keep notes on equipment and playing conditions.
+Varpa Match Journal is a full local companion for the Swedish precision throwing sport varpa. It helps players understand the sport, plan matches, record measured results, compare best throws, and keep notes on equipment and playing conditions.
 
 Features:
 
@@ -25,10 +25,10 @@ Features:
 - Offline-first use with no account, ads, subscriptions, or in-app purchases.
 
 ## Keywords
-varpa, sports, swedish, planner, rain, precision, gotland, throwing, results
+varpa, gotland, swedish sport, match journal, precision throwing, results, kit, rules, planner
 
 ## Review Notes
-RBT Varpa Rain is a sports companion app for varpa, a traditional Swedish precision throwing game. The app is designed for players who want to learn the sport, read rules and historical context, plan upcoming matches, record measured throw results, and manage notes about equipment, surfaces, weather, and playing conditions.
+Varpa Match Journal is a sports companion app for varpa, a traditional Swedish precision throwing game. The app is designed for players who want to learn the sport, read rules and historical context, plan upcoming matches, record measured throw results, and manage notes about equipment, surfaces, weather, and playing conditions.
 
 No registration, login, or user account is required. The app does not include subscriptions, in-app purchases, paid content, or ads.
 

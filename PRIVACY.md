@@ -1,6 +1,6 @@
-# RBT Varpa Rain Privacy Policy
+# Varpa Match Journal Privacy Policy
 
-RBT Varpa Rain does not collect personal data, does not use third-party tracking SDKs, and does not track users across apps or websites.
+Varpa Match Journal does not require an account and does not upload user-created match, result, kit, note, or profile content to an app backend.
 
 The app stores companion data locally on the device using UserDefaults:
 
@@ -12,4 +12,4 @@ The app stores companion data locally on the device using UserDefaults:
 
 This data stays on the device and can be reset from the Profile screen.
 
-RBT Varpa Rain does not require an account, does not upload match data, and does not include ads.
+The app uses Firebase Analytics for basic diagnostics such as app launch and section usage. It does not include ads, subscriptions, in-app purchases, or cross-app tracking.

@@ -79,7 +79,7 @@ struct StoneforgeView: View {
         case "Metal": "Metall"
         case "Composite": "Komposit"
         case "Gotland Limestone": "Gotländsk kalksten"
-        case "Iron Rain Disc": "Järnregnsskiva"
+        case "Iron Training Varpa": "Järnvarpa för träning"
         case "Light Practice Varpa": "Lätt träningsvarpa"
         case "Balanced training varpa for damp grass.": "Balanserad träningsvarpa för fuktigt gräs."
         case "Stable in crosswind and on gravel.": "Stabil i sidvind och på grus."

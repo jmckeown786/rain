@@ -1,3 +1,4 @@
+import FirebaseAnalytics
 import SwiftUI
 
 struct ContentView: View {
@@ -17,14 +18,16 @@ struct ContentView: View {
             if onboardingDone {
                 Group {
                     if horizontalSizeClass == .regular {
-                        HStack(spacing: 0) {
-                            AppSidebar(selection: $section, language: language)
+                        NavigationSplitView {
+                            VarpaWorkbenchSidebar(selection: $section, language: language)
+                        } detail: {
                             NavigationStack {
                                 screen(for: section)
                                     .id(section)
                             }
-                            .frame(maxWidth: .infinity)
+                            .background(BrandPalette.ink.ignoresSafeArea())
                         }
+                        .navigationSplitViewStyle(.balanced)
                         .background(BrandPalette.ink.ignoresSafeArea())
                     } else {
                         ZStack(alignment: .bottom) {
@@ -34,14 +37,14 @@ struct ContentView: View {
                             }
                             .safeAreaInset(edge: .bottom, spacing: 0) {
                                 Color.clear
-                                    .frame(height: keyboard.isVisible ? 0 : AppTabBar.metrics.height)
+                                    .frame(height: keyboard.isVisible ? 0 : ThrowBenchTabRail.metrics.height)
                             }
 
-                            AppTabBar(selection: $section, language: language)
+                            ThrowBenchTabRail(selection: $section, language: language)
                                 .opacity(keyboard.isVisible ? 0 : 1)
                                 .allowsHitTesting(!keyboard.isVisible)
                                 .accessibilityHidden(keyboard.isVisible)
-                                .offset(y: keyboard.isVisible ? AppTabBar.metrics.height : 0)
+                                .offset(y: keyboard.isVisible ? ThrowBenchTabRail.metrics.height : 0)
                         }
                         .animation(.easeOut(duration: 0.18), value: keyboard.isVisible)
                         .background(BrandPalette.ink.ignoresSafeArea())
@@ -49,9 +52,16 @@ struct ContentView: View {
                 }
                 .environmentObject(store)
                 .tint(BrandPalette.glowBlue)
+                .onAppear {
+                    logWorkbenchVisit(section)
+                }
+                .onChange(of: section) { newSection in
+                    logWorkbenchVisit(newSection)
+                }
             } else {
                 OnboardingView {
                     onboardingDone = true
+                    Analytics.logEvent("varpa_onboarding_completed", parameters: nil)
                 }
                 .environmentObject(store)
             }
@@ -74,6 +84,16 @@ struct ContentView: View {
         case .profile:
             ProfileView()
         }
+    }
+
+    private func logWorkbenchVisit(_ item: AppSection) {
+        Analytics.logEvent(
+            "varpa_workbench_opened",
+            parameters: [
+                "section": item.rawValue,
+                "language": language.rawValue
+            ]
+        )
     }
 }
 
@@ -108,7 +128,7 @@ final class KeyboardObserver: ObservableObject {
     }
 }
 
-struct AppTabBar: View {
+struct ThrowBenchTabRail: View {
     @Binding var selection: AppSection
     let language: AppLanguage
 
@@ -161,55 +181,51 @@ struct AppTabBar: View {
     }
 }
 
-struct AppSidebar: View {
+struct VarpaWorkbenchSidebar: View {
     @Binding var selection: AppSection
     let language: AppLanguage
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
+        List {
             BrandLockup(compact: true)
-                .padding(.top, 26)
-                .padding(.horizontal, 18)
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .padding(.top, 18)
 
-            VStack(spacing: 8) {
+            Section {
                 ForEach(AppSection.allCases) { item in
                     Button {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.86)) {
-                            selection = item
-                        }
+                        selection = item
                     } label: {
-                        HStack(spacing: 12) {
-                            Image(systemName: item.symbol)
-                                .font(.headline.weight(.black))
-                                .frame(width: 26)
-                            Text(L.sectionTitle(item, language))
-                                .font(.headline.weight(.black))
-                                .lineLimit(1)
-                            Spacer()
-                        }
-                        .foregroundStyle(selection == item ? BrandPalette.ink : BrandPalette.textSoft)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 13)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .fill(selection == item ? BrandPalette.glowBlue : BrandPalette.white.opacity(0.06))
-                        )
+                        sidebarRow(for: item)
                     }
                     .buttonStyle(.plain)
+                    .listRowBackground(rowBackground(for: item))
                 }
             }
-            .padding(.horizontal, 14)
+        }
+        .scrollContentBackground(.hidden)
+        .background(BrandPalette.ink.ignoresSafeArea())
+        .navigationTitle("Varpa Bench")
+    }
 
+    private func sidebarRow(for item: AppSection) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: item.symbol)
+                .font(.headline.weight(.black))
+                .frame(width: 26)
+            Text(L.sectionTitle(item, language))
+                .font(.headline.weight(.black))
+                .lineLimit(1)
             Spacer()
         }
-        .frame(width: 244)
-        .background(
-            BrandPalette.ink
-                .overlay(alignment: .trailing) {
-                    Rectangle()
-                        .fill(BrandPalette.glowBlue.opacity(0.14))
-                        .frame(width: 1)
-                }
-        )
+        .foregroundStyle(selection == item ? BrandPalette.ink : BrandPalette.text)
+        .padding(.vertical, 4)
+    }
+
+    private func rowBackground(for item: AppSection) -> some View {
+        RoundedRectangle(cornerRadius: 8, style: .continuous)
+            .fill(selection == item ? BrandPalette.glowBlue.opacity(0.84) : BrandPalette.white.opacity(0.05))
+            .padding(.vertical, 2)
     }
 }

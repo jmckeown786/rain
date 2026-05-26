@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-enum AppSection: String, CaseIterable, Identifiable {
+enum AppSection: String, CaseIterable, Identifiable, Hashable {
     case dashboard
     case planner
     case results
@@ -207,7 +207,7 @@ final class VarpaStore: ObservableObject {
     @Published var results: [GameResult] = []
     @Published var gear: [GearItem] = []
     @Published var playerName: String = "Varpa Player"
-    @Published var clubName: String = "RBT Varpa Club"
+    @Published var clubName: String = "Gotland Varpa Club"
 
     init() {
         restore()
@@ -265,7 +265,7 @@ final class VarpaStore: ObservableObject {
         results = [Self.defaultResult]
         gear = Self.defaultGear
         playerName = "Varpa Player"
-        clubName = "RBT Varpa Club"
+        clubName = "Gotland Varpa Club"
         persist()
     }
 
@@ -323,7 +323,7 @@ final class VarpaStore: ObservableObject {
 
     private static let defaultGear = [
         GearItem(id: UUID(), name: "Gotland Limestone", material: "Stone", weight: 0.95, diameter: 17.5, notes: "Balanced training varpa for damp grass.", favorite: true),
-        GearItem(id: UUID(), name: "Iron Rain Disc", material: "Metal", weight: 1.15, diameter: 16.2, notes: "Stable in crosswind and on gravel.", favorite: false),
+        GearItem(id: UUID(), name: "Iron Training Varpa", material: "Metal", weight: 1.15, diameter: 16.2, notes: "Stable in crosswind and on gravel.", favorite: false),
         GearItem(id: UUID(), name: "Light Practice Varpa", material: "Composite", weight: 0.72, diameter: 18.0, notes: "Good for juniors and short drills.", favorite: false)
     ]
 }

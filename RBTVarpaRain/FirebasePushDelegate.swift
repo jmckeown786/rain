@@ -1,4 +1,5 @@
 import FirebaseCore
+import FirebaseAnalytics
 import FirebaseMessaging
 import UIKit
 import UserNotifications
@@ -57,6 +58,7 @@ final class FirebasePushDelegate: NSObject, UIApplicationDelegate, UNUserNotific
         }
 
         FirebaseApp.configure(options: options)
+        Analytics.setAnalyticsCollectionEnabled(true)
         return true
     }
 
