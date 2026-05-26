@@ -1,6 +1,6 @@
 workflows:
   ios-testflight:
-    name: Varpa Match Journal iOS TestFlight
+    name: Varpa Rain iOS TestFlight
     max_build_duration: 120
     instance_type: mac_mini_m2
 

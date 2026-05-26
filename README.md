@@ -1,6 +1,6 @@
-# Varpa Match Journal
+# Varpa Rain
 
-Varpa Match Journal is a standalone SwiftUI iPhone app for the Swedish precision sport varpa.
+Varpa Rain is a standalone SwiftUI iPhone app for the Swedish precision sport varpa.
 
 The app combines a polished sports interface with practical club tools:
 

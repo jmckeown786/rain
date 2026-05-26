@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "010000000000000000000040"
-               BuildableName = "VarpaMatchJournal.app"
+               BuildableName = "VarpaRain.app"
                BlueprintName = "RBTVarpaRain"
                ReferencedContainer = "container:RBTVarpaRain.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "010000000000000000000040"
-            BuildableName = "VarpaMatchJournal.app"
+            BuildableName = "VarpaRain.app"
             BlueprintName = "RBTVarpaRain"
             ReferencedContainer = "container:RBTVarpaRain.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "010000000000000000000040"
-            BuildableName = "VarpaMatchJournal.app"
+            BuildableName = "VarpaRain.app"
             BlueprintName = "RBTVarpaRain"
             ReferencedContainer = "container:RBTVarpaRain.xcodeproj">
          </BuildableReference>

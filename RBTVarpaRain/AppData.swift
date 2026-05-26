@@ -133,7 +133,7 @@ enum AppData {
             accent: BrandPalette.glowBlue,
             readTime: "4 min read",
             imageKind: .rain,
-            lead: "Varpa Match Journal treats weather as match intelligence. Wet ground can slow the object, heavy rain can make release less reliable, and wind can expose throws with too much height.",
+            lead: "Varpa Rain treats weather as match intelligence. Wet ground can slow the object, heavy rain can make release less reliable, and wind can expose throws with too much height.",
             sections: [
                 AlmanacSection(
                     id: "dry",
@@ -256,7 +256,7 @@ enum AppData {
             id: "score",
             title: "Closest legal throw wins",
             summary: "Lower distance from the marker is better.",
-            detail: "If the closest legal throw belongs to your side, you win the frame or score under the chosen local format. Varpa Match Journal therefore treats smaller measured distance as the better result.",
+            detail: "If the closest legal throw belongs to your side, you win the frame or score under the chosen local format. Varpa Rain therefore treats smaller measured distance as the better result.",
             imageKind: .scoring
         )
     ]
@@ -405,7 +405,7 @@ enum AppData {
             accent: BrandPalette.glowBlue,
             readTime: "4 min läsning",
             imageKind: .rain,
-            lead: "Varpa Match Journal behandlar väder som matchinformation. Vått underlag kan bromsa varpan, kraftigt regn kan göra greppet sämre och vind avslöjar kast med för hög bana.",
+            lead: "Varpa Rain behandlar väder som matchinformation. Vått underlag kan bromsa varpan, kraftigt regn kan göra greppet sämre och vind avslöjar kast med för hög bana.",
             sections: [
                 AlmanacSection(id: "dry", heading: "Torr bana", paragraphs: [
                     "Torr mark ger ofta längst glid och tydligast återkoppling. Om kasten hela tiden rinner förbi markören, sänk farten innan du ändrar allt annat.",

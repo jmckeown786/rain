@@ -1,6 +1,6 @@
-# Varpa Match Journal Privacy Policy
+# Varpa Rain Privacy Policy
 
-Varpa Match Journal does not require an account and does not upload user-created match, result, kit, note, or profile content to an app backend.
+Varpa Rain does not require an account and does not upload user-created match, result, kit, note, or profile content to an app backend.
 
 The app stores companion data locally on the device using UserDefaults:
 

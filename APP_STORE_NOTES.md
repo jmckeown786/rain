@@ -1,7 +1,7 @@
 # App Store Notes
 
 ## App Name
-Varpa Match Journal
+Varpa Rain
 
 ## Subtitle
 Match journal for varpa
@@ -13,7 +13,7 @@ Sports
 Plan Varpa matches, record measured throws, manage kit, and learn the history and rules of the Gotland precision sport.
 
 ## Description
-Varpa Match Journal is a full local companion for the Swedish precision throwing sport varpa. It helps players understand the sport, plan matches, record measured results, compare best throws, and keep notes on equipment and playing conditions.
+Varpa Rain is a full local companion for the Swedish precision throwing sport varpa. It helps players understand the sport, plan matches, record measured results, compare best throws, and keep notes on equipment and playing conditions.
 
 Features:
 
@@ -28,7 +28,7 @@ Features:
 varpa, gotland, swedish sport, match journal, precision throwing, results, kit, rules, planner
 
 ## Review Notes
-Varpa Match Journal is a sports companion app for varpa, a traditional Swedish precision throwing game. The app is designed for players who want to learn the sport, read rules and historical context, plan upcoming matches, record measured throw results, and manage notes about equipment, surfaces, weather, and playing conditions.
+Varpa Rain is a sports companion app for varpa, a traditional Swedish precision throwing game. The app is designed for players who want to learn the sport, read rules and historical context, plan upcoming matches, record measured throw results, and manage notes about equipment, surfaces, weather, and playing conditions.
 
 No registration, login, or user account is required. The app does not include subscriptions, in-app purchases, paid content, or ads.
 
