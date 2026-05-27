@@ -14,7 +14,7 @@ struct AppScreen<Content: View>: View {
                 ScrollView(showsIndicators: false) {
                     content
                         .frame(maxWidth: contentMaxWidth(for: proxy.size.width), alignment: .leading)
-                        .padding(.horizontal, 18)
+                        .padding(.horizontal, proxy.size.width > 760 ? 24 : 18)
                         .padding(.top, topPadding(for: proxy.size.width))
                         .padding(.bottom, 30)
                         .frame(maxWidth: .infinity)
@@ -55,7 +55,7 @@ struct RainBackground: View {
             .ignoresSafeArea()
 
             RadialGradient(
-                colors: [BrandPalette.rainBlue.opacity(0.48), .clear],
+                colors: [BrandPalette.rainBlue.opacity(0.58), .clear],
                 center: .topTrailing,
                 startRadius: 20,
                 endRadius: 420
@@ -82,17 +82,36 @@ struct RainCard<Content: View>: View {
 
     var body: some View {
         content
-            .padding(16)
+            .padding(17)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(LinearGradient.rainSurface)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .stroke(BrandPalette.glowBlue.opacity(0.32), lineWidth: 1)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [BrandPalette.glowBlue.opacity(0.52), BrandPalette.rainBlue.opacity(0.12)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 1
+                            )
                     )
+                    .overlay(alignment: .topLeading) {
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(BrandPalette.white.opacity(0.06))
+                            .frame(height: 34)
+                            .mask(
+                                LinearGradient(
+                                    colors: [.white, .clear],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                    }
             )
-            .shadow(color: BrandPalette.rainBlue.opacity(0.2), radius: 16, x: 0, y: 10)
+            .shadow(color: BrandPalette.rainBlue.opacity(0.24), radius: 18, x: 0, y: 12)
     }
 }
 
@@ -128,7 +147,7 @@ struct SectionKick: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(title)
-                .font(.title3.weight(.heavy))
+                .font(.system(size: 22, weight: .black, design: .rounded))
                 .foregroundStyle(BrandPalette.text)
             Text(subtitle)
                 .font(.subheadline)
@@ -146,7 +165,7 @@ struct StatPill: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(value)
-                .font(.headline.weight(.black))
+                .font(.system(size: 18, weight: .black, design: .rounded))
                 .foregroundStyle(BrandPalette.white)
                 .lineLimit(1)
                 .minimumScaleFactor(0.62)
@@ -156,12 +175,18 @@ struct StatPill: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.75)
         }
-        .padding(12)
+        .padding(13)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(color.opacity(0.16))
-                .overlay(RoundedRectangle(cornerRadius: 8).stroke(color.opacity(0.32), lineWidth: 1))
+                .fill(
+                    LinearGradient(
+                        colors: [color.opacity(0.22), BrandPalette.ink.opacity(0.42)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(color.opacity(0.42), lineWidth: 1))
         )
     }
 }
@@ -176,10 +201,10 @@ struct AppTextFieldStyle: TextFieldStyle {
             .padding(.vertical, 13)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(BrandPalette.ink.opacity(0.62))
+                    .fill(BrandPalette.ink.opacity(0.78))
                     .overlay(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .stroke(BrandPalette.glowBlue.opacity(0.24), lineWidth: 1)
+                            .stroke(BrandPalette.glowBlue.opacity(0.3), lineWidth: 1)
                     )
             )
     }
@@ -201,13 +226,13 @@ struct FormDatePicker: View {
                 .colorScheme(.dark)
                 .tint(BrandPalette.glowBlue)
         }
-        .padding(12)
+        .padding(13)
         .background(
             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(BrandPalette.ink.opacity(0.48))
+                .fill(BrandPalette.ink.opacity(0.72))
                 .overlay(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .stroke(BrandPalette.white.opacity(0.08), lineWidth: 1)
+                        .stroke(BrandPalette.glowBlue.opacity(0.18), lineWidth: 1)
                 )
         )
     }
@@ -231,7 +256,7 @@ struct SurfaceSegmentedControl: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.78)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 11)
+                        .padding(.vertical, 12)
                         .background(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                                 .fill(selection == item ? item.color : BrandPalette.white.opacity(0.09))
@@ -244,10 +269,14 @@ struct SurfaceSegmentedControl: View {
                 .buttonStyle(.plain)
             }
         }
-        .padding(5)
+        .padding(6)
         .background(
             RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .fill(BrandPalette.ink.opacity(0.68))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(BrandPalette.glowBlue.opacity(0.13), lineWidth: 1)
+                )
         )
     }
 }
@@ -277,7 +306,7 @@ struct WeatherMenu: View {
                         .font(.caption.weight(.black))
                         .foregroundStyle(BrandPalette.textSoft)
                 }
-                .padding(12)
+                .padding(13)
                 .background(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .fill(BrandPalette.ink.opacity(0.68))
@@ -350,7 +379,13 @@ struct MatchLaneView: View {
 
             ZStack {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(BrandPalette.ink.opacity(0.72))
+                    .fill(
+                        LinearGradient(
+                            colors: [BrandPalette.ink.opacity(0.9), BrandPalette.midnight.opacity(0.78)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                 ForEach(0..<6) { index in
                     Path { path in
                         let y = size.height * CGFloat(index + 1) / 7
@@ -367,12 +402,12 @@ struct MatchLaneView: View {
 
                 ForEach(0..<4) { index in
                     Circle()
-                        .stroke(BrandPalette.rainBlue.opacity(Double(4 - index) * 0.12), lineWidth: 2)
+                        .stroke(BrandPalette.glowBlue.opacity(Double(4 - index) * 0.1), lineWidth: 2)
                         .frame(width: CGFloat(118 - index * 24), height: CGFloat(118 - index * 24))
                         .position(marker)
                 }
                 Circle()
-                    .fill(BrandPalette.rainBlue)
+                    .fill(BrandPalette.glowBlue)
                     .frame(width: 10, height: 10)
                     .position(marker)
                 VarpaStone(color: surface.color)
@@ -485,13 +520,19 @@ struct PrimaryButtonStyle: ButtonStyle {
         configuration.label
             .font(.headline.weight(.bold))
             .foregroundStyle(BrandPalette.ink)
-            .padding(.vertical, 13)
+            .padding(.vertical, 14)
             .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(LinearGradient.rainAction)
                     .opacity(configuration.isPressed ? 0.72 : 1)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(BrandPalette.white.opacity(0.58), lineWidth: 1)
+                    )
             )
+            .shadow(color: BrandPalette.glowBlue.opacity(configuration.isPressed ? 0.1 : 0.24), radius: 10, x: 0, y: 6)
+            .scaleEffect(configuration.isPressed ? 0.985 : 1)
     }
 }
 
@@ -504,8 +545,13 @@ struct QuietButtonStyle: ButtonStyle {
             .padding(.horizontal, 12)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(BrandPalette.white.opacity(configuration.isPressed ? 0.08 : 0.12))
+                    .fill(BrandPalette.white.opacity(configuration.isPressed ? 0.09 : 0.13))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(BrandPalette.glowBlue.opacity(0.16), lineWidth: 1)
+                    )
             )
+            .scaleEffect(configuration.isPressed ? 0.985 : 1)
     }
 }
 

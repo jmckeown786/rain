@@ -135,7 +135,7 @@ struct ThrowBenchTabRail: View {
     static let metrics = Metrics()
 
     struct Metrics {
-        let height: CGFloat = 70
+        let height: CGFloat = 82
     }
 
     var body: some View {
@@ -148,7 +148,7 @@ struct ThrowBenchTabRail: View {
                 } label: {
                     VStack(spacing: 5) {
                         Image(systemName: item.symbol)
-                            .font(.system(size: 19, weight: .black))
+                            .font(.system(size: selection == item ? 20 : 18, weight: .black))
                             .frame(height: 22)
                         Text(L.sectionTitle(item, language))
                             .font(.system(size: 10, weight: .black, design: .rounded))
@@ -157,27 +157,34 @@ struct ThrowBenchTabRail: View {
                     }
                     .foregroundStyle(selection == item ? BrandPalette.ink : BrandPalette.textSoft)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 9)
+                    .padding(.vertical, 10)
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .fill(selection == item ? BrandPalette.glowBlue : BrandPalette.white.opacity(0.001))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .stroke(selection == item ? BrandPalette.white.opacity(0.58) : .clear, lineWidth: 1)
+                            )
                     )
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(L.sectionTitle(item, language))
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.top, 8)
-        .padding(.bottom, 10)
+        .padding(.horizontal, 11)
+        .padding(.top, 10)
+        .padding(.bottom, 11)
         .background(
-            BrandPalette.ink
-                .overlay(alignment: .top) {
-                    Rectangle()
-                        .fill(BrandPalette.glowBlue.opacity(0.16))
-                        .frame(height: 1)
-                }
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(BrandPalette.ink.opacity(0.92))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(BrandPalette.glowBlue.opacity(0.22), lineWidth: 1)
+                )
+                .shadow(color: BrandPalette.rainBlue.opacity(0.22), radius: 18, x: 0, y: -4)
         )
+        .padding(.horizontal, 10)
+        .padding(.bottom, 8)
     }
 }
 
@@ -205,7 +212,14 @@ struct VarpaWorkbenchSidebar: View {
             }
         }
         .scrollContentBackground(.hidden)
-        .background(BrandPalette.ink.ignoresSafeArea())
+        .background(
+            LinearGradient(
+                colors: [BrandPalette.ink, BrandPalette.midnight.opacity(0.72)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+        )
         .navigationTitle("Varpa Bench")
     }
 
@@ -220,12 +234,16 @@ struct VarpaWorkbenchSidebar: View {
             Spacer()
         }
         .foregroundStyle(selection == item ? BrandPalette.ink : BrandPalette.text)
-        .padding(.vertical, 4)
+        .padding(.vertical, 7)
     }
 
     private func rowBackground(for item: AppSection) -> some View {
         RoundedRectangle(cornerRadius: 8, style: .continuous)
-            .fill(selection == item ? BrandPalette.glowBlue.opacity(0.84) : BrandPalette.white.opacity(0.05))
+            .fill(selection == item ? BrandPalette.glowBlue.opacity(0.9) : BrandPalette.white.opacity(0.06))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(selection == item ? BrandPalette.white.opacity(0.5) : BrandPalette.glowBlue.opacity(0.08), lineWidth: 1)
+            )
             .padding(.vertical, 2)
     }
 }
