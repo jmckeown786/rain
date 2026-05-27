@@ -5,17 +5,21 @@ enum AppSection: String, CaseIterable, Identifiable, Hashable {
     case dashboard
     case planner
     case results
+    case more
     case almanac
     case kit
     case profile
 
     var id: String { rawValue }
 
+    static let menuCases: [AppSection] = [.dashboard, .planner, .results, .more]
+
     var title: String {
         switch self {
         case .dashboard: "Home"
         case .planner: "Planner"
         case .results: "Results"
+        case .more: "More"
         case .almanac: "Almanac"
         case .kit: "Kit"
         case .profile: "Profile"
@@ -27,6 +31,7 @@ enum AppSection: String, CaseIterable, Identifiable, Hashable {
         case .dashboard: "house.and.flag.fill"
         case .planner: "calendar.badge.plus"
         case .results: "list.bullet.clipboard.fill"
+        case .more: "ellipsis"
         case .almanac: "book.closed.fill"
         case .kit: "seal.fill"
         case .profile: "person.crop.circle.fill"

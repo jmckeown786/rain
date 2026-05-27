@@ -123,8 +123,7 @@ struct HomeView: View {
         switch id {
         case "plan": .planner
         case "record": .results
-        case "gear": .kit
-        default: .almanac
+        default: .more
         }
     }
 

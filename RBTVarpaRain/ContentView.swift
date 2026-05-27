@@ -77,6 +77,8 @@ struct ContentView: View {
             MatchCenterView()
         case .results:
             LeagueView()
+        case .more:
+            MoreView(language: language)
         case .almanac:
             CultureView()
         case .kit:
@@ -140,7 +142,7 @@ struct ThrowBenchTabRail: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            ForEach(AppSection.allCases) { item in
+            ForEach(AppSection.menuCases) { item in
                 Button {
                     withAnimation(.spring(response: 0.25, dampingFraction: 0.86)) {
                         selection = item
@@ -200,7 +202,7 @@ struct VarpaWorkbenchSidebar: View {
                 .padding(.top, 18)
 
             Section {
-                ForEach(AppSection.allCases) { item in
+                ForEach(AppSection.menuCases) { item in
                     Button {
                         selection = item
                     } label: {
@@ -245,5 +247,90 @@ struct VarpaWorkbenchSidebar: View {
                     .stroke(selection == item ? BrandPalette.white.opacity(0.5) : BrandPalette.glowBlue.opacity(0.08), lineWidth: 1)
             )
             .padding(.vertical, 2)
+    }
+}
+
+struct MoreView: View {
+    let language: AppLanguage
+
+    private var items: [AppSection] {
+        [.almanac, .kit, .profile]
+    }
+
+    var body: some View {
+        AppScreen {
+            VStack(alignment: .leading, spacing: 16) {
+                HStack(spacing: 14) {
+                    BrandLockup(compact: true)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(L.sectionTitle(.more, language))
+                            .font(.system(size: 30, weight: .black, design: .rounded))
+                            .foregroundStyle(BrandPalette.white)
+                        Text(language == .english ? "Learning, equipment, and local settings." : "Kunskap, utrustning och lokala inställningar.")
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(BrandPalette.textSoft)
+                    }
+                }
+
+                ForEach(items) { item in
+                    NavigationLink {
+                        destination(for: item)
+                    } label: {
+                        RainCard {
+                            HStack(spacing: 14) {
+                                Image(systemName: item.symbol)
+                                    .font(.title2.weight(.black))
+                                    .foregroundStyle(BrandPalette.glowBlue)
+                                    .frame(width: 48, height: 48)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .fill(BrandPalette.glowBlue.opacity(0.14))
+                                    )
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text(L.sectionTitle(item, language))
+                                        .font(.headline.weight(.black))
+                                        .foregroundStyle(BrandPalette.white)
+                                    Text(subtitle(for: item))
+                                        .font(.subheadline)
+                                        .foregroundStyle(BrandPalette.textSoft)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.caption.weight(.black))
+                                    .foregroundStyle(BrandPalette.textMuted)
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func destination(for item: AppSection) -> some View {
+        switch item {
+        case .almanac:
+            CultureView()
+        case .kit:
+            StoneforgeView()
+        case .profile:
+            ProfileView()
+        default:
+            EmptyView()
+        }
+    }
+
+    private func subtitle(for item: AppSection) -> String {
+        switch (item, language) {
+        case (.almanac, .english): "History, rules, illustrated guides, and glossary."
+        case (.kit, .english): "Favorite varpa, material, weight, and field notes."
+        case (.profile, .english): "Language, local profile, achievements, and reset."
+        case (.almanac, .swedish): "Historia, regler, illustrerade guider och ordlista."
+        case (.kit, .swedish): "Favoritvarpa, material, vikt och fältanteckningar."
+        case (.profile, .swedish): "Språk, lokal profil, mål och nollställning."
+        default: ""
+        }
     }
 }

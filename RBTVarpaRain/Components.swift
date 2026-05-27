@@ -375,51 +375,65 @@ struct MatchLaneView: View {
         GeometryReader { proxy in
             let size = proxy.size
             let marker = CGPoint(x: size.width * 0.74, y: size.height * 0.42)
-            let throwPoint = CGPoint(x: size.width * (0.22 + min(max(quality, 0), 1) * 0.44), y: size.height * 0.67)
+            let throwPoint = CGPoint(
+                x: size.width * (0.5 + min(max(quality, 0), 1) * 0.16),
+                y: size.height * 0.66
+            )
 
             ZStack {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(
                         LinearGradient(
-                            colors: [BrandPalette.ink.opacity(0.9), BrandPalette.midnight.opacity(0.78)],
+                            colors: [Color(hex: 0x071052), Color(hex: 0x111E78), Color(hex: 0x071052)],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
                     )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(BrandPalette.rainBlue.opacity(0.1))
+                            .blur(radius: 18)
+                            .offset(x: size.width * 0.3, y: -size.height * 0.08)
+                    )
                 ForEach(0..<6) { index in
                     Path { path in
                         let y = size.height * CGFloat(index + 1) / 7
-                        path.move(to: CGPoint(x: 16, y: y))
-                        path.addLine(to: CGPoint(x: size.width - 16, y: y - CGFloat(index) * 2))
+                        path.move(to: CGPoint(x: size.width * 0.05, y: y))
+                        path.addLine(to: CGPoint(x: size.width * 0.95, y: y - CGFloat(index) * 3))
                     }
-                    .stroke(surface.color.opacity(0.13), lineWidth: 1)
+                    .stroke(BrandPalette.glowBlue.opacity(0.11), lineWidth: 1)
                 }
                 Path { path in
                     path.move(to: CGPoint(x: size.width * 0.12, y: size.height * 0.78))
-                    path.addQuadCurve(to: throwPoint, control: CGPoint(x: size.width * 0.44, y: size.height * 0.18))
+                    path.addQuadCurve(
+                        to: throwPoint,
+                        control: CGPoint(x: size.width * 0.42, y: size.height * 0.38)
+                    )
                 }
-                .stroke(BrandPalette.gold.opacity(0.8), style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [8, 8]))
+                .stroke(BrandPalette.gold.opacity(0.86), style: StrokeStyle(lineWidth: 4, lineCap: .round, dash: [10, 10]))
 
-                ForEach(0..<4) { index in
+                ForEach(0..<5) { index in
                     Circle()
-                        .stroke(BrandPalette.glowBlue.opacity(Double(4 - index) * 0.1), lineWidth: 2)
-                        .frame(width: CGFloat(118 - index * 24), height: CGFloat(118 - index * 24))
+                        .stroke(BrandPalette.glowBlue.opacity(Double(5 - index) * 0.13), lineWidth: 3)
+                        .frame(width: CGFloat(154 - index * 25), height: CGFloat(154 - index * 25))
                         .position(marker)
                 }
                 Circle()
                     .fill(BrandPalette.glowBlue)
-                    .frame(width: 10, height: 10)
+                    .frame(width: 16, height: 16)
                     .position(marker)
-                VarpaStone(color: surface.color)
-                    .frame(width: 34, height: 22)
+                    .shadow(color: BrandPalette.glowBlue.opacity(0.6), radius: 10)
+                VarpaStone(color: BrandPalette.glowBlue)
+                    .frame(width: 58, height: 34)
                     .position(throwPoint)
+                    .shadow(color: BrandPalette.glowBlue.opacity(0.62), radius: 12, x: 0, y: 3)
                 Image(systemName: weather.symbol)
-                    .font(.caption.weight(.black))
-                    .foregroundStyle(BrandPalette.textSoft)
-                    .position(x: size.width - 28, y: 24)
+                    .font(.title3.weight(.black))
+                    .foregroundStyle(BrandPalette.glowBlue)
+                    .position(x: size.width - 34, y: 28)
             }
         }
-        .frame(height: 168)
+        .frame(height: 176)
     }
 }
 
