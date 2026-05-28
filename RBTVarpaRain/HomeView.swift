@@ -26,12 +26,6 @@ struct HomeView: View {
                 HStack(alignment: .center, spacing: 14) {
                     BrandLockup(compact: true)
                     Spacer()
-                    LanguageSwitcher(
-                        language: Binding(
-                            get: { language },
-                            set: { languageRawValue = $0.rawValue }
-                        )
-                    )
                     VStack(alignment: .trailing, spacing: 2) {
                         Text(store.playerName)
                             .font(.caption.weight(.heavy))

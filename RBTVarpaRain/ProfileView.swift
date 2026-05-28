@@ -37,15 +37,37 @@ struct ProfileView: View {
     var body: some View {
         AppScreen {
             VStack(alignment: .leading, spacing: 16) {
-                HStack(alignment: .center) {
-                    SectionKick(title: L.text(.profileTitle, language), subtitle: L.text(.profileSubtitle, language))
-                    Spacer()
-                    LanguageSwitcher(
-                        language: Binding(
-                            get: { language },
-                            set: { languageRawValue = $0.rawValue }
+                SectionKick(title: L.text(.profileTitle, language), subtitle: L.text(.profileSubtitle, language))
+
+                RainCard {
+                    HStack(spacing: 14) {
+                        Image(systemName: "globe.europe.africa.fill")
+                            .font(.title2.weight(.black))
+                            .foregroundStyle(BrandPalette.glowBlue)
+                            .frame(width: 46, height: 46)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(BrandPalette.glowBlue.opacity(0.14))
+                            )
+
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(L.text(.language, language))
+                                .font(.headline.weight(.black))
+                                .foregroundStyle(BrandPalette.white)
+                            Text(language == .english ? "English or Swedish interface" : "Engelskt eller svenskt gränssnitt")
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(BrandPalette.textSoft)
+                        }
+
+                        Spacer(minLength: 10)
+
+                        LanguageSwitcher(
+                            language: Binding(
+                                get: { language },
+                                set: { languageRawValue = $0.rawValue }
+                            )
                         )
-                    )
+                    }
                 }
 
                 RainCard {
